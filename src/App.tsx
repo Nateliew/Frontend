@@ -1,13 +1,11 @@
 import "./App.css";
-import React from "react";
 import axios from "axios";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import Divider from "@mui/material/Divider";
+// import ListItem from "@mui/material/ListItem";
+// import Divider from "@mui/material/Divider";
 
 export default function App() {
-  // const [openSingle, setOpenSingle] = useState(false);
   const [stocks, setStocks] = useState<any[]>([]);
 
   // //obtain all the stocks data in DB
@@ -55,22 +53,22 @@ export default function App() {
           });
         })
       );
-  });
+  }, []);
 
   const handleSave = async (stocks: any) => {
-    console.log("working", stocks);
-    await stocks.forEach((element: any) => {
-      axios.post(`${process.env.REACT_APP_API_SERVER}`, {
-        data: {
-          symbol: element.symbol,
-          name: element.companyName,
-          price: element.latestPrice,
-          percent: element.changePercent,
-          change: element.change,
-          image: `https://storage.googleapis.com/iex/api/logos/${element.symbol}.png`,
-        },
-      });
-    });
+    console.log("work", stocks);
+    // await stocks.forEach((element: any) => {
+    //   axios.post(`${process.env.REACT_APP_API_SERVER}`, {
+    //     data: {
+    //       symbol: element.symbol,
+    //       name: element.companyName,
+    //       price: element.latestPrice,
+    //       percent: element.changePercent,
+    //       change: element.change,
+    //       image: `https://storage.googleapis.com/iex/api/logos/${element.symbol}.png`,
+    //     },
+    //   });
+    // });
   };
 
   return (
@@ -80,26 +78,33 @@ export default function App() {
           <h3>Stock price</h3>
           <h6>stocks</h6>
           <div className="stocks-container">
-            <List
-              sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
-            >
+            <List sx={{ width: 550, bgcolor: "background.paper" }}>
               {stocks.map((stock: any) => (
                 <div className="stock" key={stock.id}>
-                  <h4>{stock.symbol}</h4>
                   <img
                     src={`https://storage.googleapis.com/iex/api/logos/${
                       stock.symbol as string
                     }.png`}
                     alt="logo"
+                    className="pic"
                   />
-                  <h5>${stock.companyName}</h5>
-                  <h5>${stock.latestPrice}</h5>
-                  <h5>${stock.changePercent}</h5>
-                  <h5>${stock.change}</h5>
+                  <div className="middle">
+                    <h4>{stock.symbol}</h4>
+                    <h5>{stock.companyName}</h5>
+                  </div>
+                  <div className="right">
+                    <h5>${stock.latestPrice}</h5>
+                    <h5 className={stock.changePercent > 0 ? "good" : "bad"}>
+                      {stock.changePercent}
+                    </h5>
+                    <h5 className={stock.changePercent > 0 ? "good" : "bad"}>
+                      {stock.change}
+                    </h5>
+                  </div>
+                  {/* style a divider here */}
+                  <hr className="single" />
                 </div>
               ))}
-              {/* style a divider here */}
-              <hr className="double" />
             </List>
           </div>
           <button onClick={() => handleSave(stocks)}>Save</button>

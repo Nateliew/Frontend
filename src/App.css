@@ -7,19 +7,22 @@
   pointer-events: none;
 }
 
+.stock {
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .stocks-container {
   color: black;
+  /* display: flex;
+  align-items: center;
+  justify-content: space-between; */
 }
 
-hr.double {
-  border-top: 3px double;
-  border-bottom: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+hr.single {
+  border-top: 3px solid;
 }
 
 .App-header {
@@ -35,4 +38,35 @@ hr.double {
 
 .App-link {
   color: #61dafb;
+}
+
+.good {
+  color: green;
+}
+
+.bad {
+  color: red;
+}
+
+.bottomright {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+.pic {
+  float: left;
+  border-radius: 50%;
+  max-width: 20%;
+  height: auto;
+}
+
+.middle {
+  float: center;
+  min-width: 0;
+}
+
+.right {
+  float: right;
+  min-width: 0;
 }
