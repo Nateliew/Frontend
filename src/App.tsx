@@ -1,26 +1,108 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import React from "react";
+// import AddStock from "./Components/AddStock";
+// import SingleStock from "./Components/SingleStock";
+import axios from "axios";
+import { useState, useEffect } from "react";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import Divider from "@mui/material/Divider";
+// import Typography from "@mui/material/Typography";
+// import ListItemText from "@mui/material/ListItemText";
 
-function App() {
+export default function App() {
+  // const [openSingle, setOpenSingle] = useState(false);
+  const [stocks, setStocks] = useState<any[]>([]);
+
+  // //obtain all the stocks data in DB
+  // const getInitialData = async () => {
+  //   let initialAPICall = await axios.get(`${process.env.REACT_APP_API_SERVER}`);
+  //   setStocks(initialAPICall.data);
+  // };
+
+  // // load upon starting up the app
+  // useEffect(() => {
+  //   //if the stock information is not updated, retrieve from API
+  //   getInitialData();
+  // }, []);
+
+  useEffect(() => {
+    axios
+      .all([
+        axios.get(
+          "https://api.iex.cloud/v1/data/CORE/QUOTE/AAPL?token=pk_4a23a8e75ce54c35bd704366adb5115d"
+        ),
+        axios.get(
+          "https://api.iex.cloud/v1/data/CORE/QUOTE/NFLX?token=pk_4a23a8e75ce54c35bd704366adb5115d"
+        ),
+        axios.get(
+          "https://api.iex.cloud/v1/data/CORE/QUOTE/GOOG?token=pk_4a23a8e75ce54c35bd704366adb5115d"
+        ),
+        axios.get(
+          "https://api.iex.cloud/v1/data/CORE/QUOTE/AMZN?token=pk_4a23a8e75ce54c35bd704366adb5115d"
+        ),
+        axios.get(
+          "https://api.iex.cloud/v1/data/CORE/QUOTE/TSLA?token=pk_4a23a8e75ce54c35bd704366adb5115d"
+        ),
+      ])
+      .then(
+        axios.spread((...responses) => {
+          //map out and check if there are duplicates
+          responses.map((response: any) => {
+            let name = response.data[0].companyName;
+            let check = stocks.some((el) => el.companyName === name);
+            console.log(stocks);
+
+            if (check === false) {
+              stocks.push(response.data[0]);
+            }
+          });
+        })
+      );
+  });
+
+  const handleSave = async (stocks: any) => {
+    console.log("working", stocks);
+    await stocks.forEach((element: any) => {
+      axios.post(`${process.env.REACT_APP_API_SERVER}`, {
+        data: {
+          name: element.companyName,
+          price: element.latestPrice,
+          image: `https://storage.googleapis.com/iex/api/logos/${element.symbol}.png`,
+        },
+      });
+    });
+  };
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <div>
+          <h3>Stock price</h3>
+          <h6>stocks</h6>
+          <div className="stocks-container">
+            <List
+              sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
+            >
+              {stocks.map((stock: any) => (
+                <div className="stock" key={stock.id}>
+                  <h4>{stock.companyName}</h4>
+                  <img
+                    src={`https://storage.googleapis.com/iex/api/logos/${
+                      stock.symbol as string
+                    }.png`}
+                    alt="logo"
+                  />
+                  <h5>${stock.latestPrice}</h5>
+                </div>
+              ))}
+              <Divider variant="inset" component="li" />
+            </List>
+          </div>
+          {/* <AddStock addStock={createNewStock} /> */}
+          <button onClick={() => handleSave(stocks)}>Save</button>
+        </div>
       </header>
     </div>
   );
 }
-
-export default App;
