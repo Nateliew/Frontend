@@ -1,14 +1,10 @@
 import "./App.css";
 import React from "react";
-// import AddStock from "./Components/AddStock";
-// import SingleStock from "./Components/SingleStock";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import Divider from "@mui/material/Divider";
-// import Typography from "@mui/material/Typography";
-// import ListItemText from "@mui/material/ListItemText";
 
 export default function App() {
   // const [openSingle, setOpenSingle] = useState(false);
@@ -66,8 +62,11 @@ export default function App() {
     await stocks.forEach((element: any) => {
       axios.post(`${process.env.REACT_APP_API_SERVER}`, {
         data: {
+          symbol: element.symbol,
           name: element.companyName,
           price: element.latestPrice,
+          percent: element.changePercent,
+          change: element.change,
           image: `https://storage.googleapis.com/iex/api/logos/${element.symbol}.png`,
         },
       });
@@ -86,20 +85,23 @@ export default function App() {
             >
               {stocks.map((stock: any) => (
                 <div className="stock" key={stock.id}>
-                  <h4>{stock.companyName}</h4>
+                  <h4>{stock.symbol}</h4>
                   <img
                     src={`https://storage.googleapis.com/iex/api/logos/${
                       stock.symbol as string
                     }.png`}
                     alt="logo"
                   />
+                  <h5>${stock.companyName}</h5>
                   <h5>${stock.latestPrice}</h5>
+                  <h5>${stock.changePercent}</h5>
+                  <h5>${stock.change}</h5>
                 </div>
               ))}
-              <Divider variant="inset" component="li" />
+              {/* style a divider here */}
+              <hr className="double" />
             </List>
           </div>
-          {/* <AddStock addStock={createNewStock} /> */}
           <button onClick={() => handleSave(stocks)}>Save</button>
         </div>
       </header>
