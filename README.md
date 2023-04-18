@@ -9,7 +9,6 @@ An app that showcases the list of stocks and their changes.
 * [Screenshots](#screenshots)
 * [Setup](#setup)
 * [Project Status](#project-status)
-* [Acknowledgements](#acknowledgements)
 * [Contact](#contact)
 <!-- * [License](#license) -->
 
