@@ -2,25 +2,20 @@ import "./App.css";
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import List from "@mui/material/List";
-// import ListItem from "@mui/material/ListItem";
-// import Divider from "@mui/material/Divider";
+import Grid from "@mui/material/Grid";
+import { useSearchParams, useNavigate } from "react-router-dom";
 
 export default function App() {
   const [stocks, setStocks] = useState<any[]>([]);
+  let [searchParams, setSearchParams] = useSearchParams();
 
-  // //obtain all the stocks data in DB
-  // const getInitialData = async () => {
-  //   let initialAPICall = await axios.get(`${process.env.REACT_APP_API_SERVER}`);
-  //   setStocks(initialAPICall.data);
-  // };
-
-  // // load upon starting up the app
-  // useEffect(() => {
-  //   //if the stock information is not updated, retrieve from API
-  //   getInitialData();
-  // }, []);
-
+  // load upon starting up the app
   useEffect(() => {
+    //if the stock information is not updated, retrieve from API
+    getInitialData();
+  }, []);
+
+  const getInitialData = async () => {
     axios
       .all([
         axios.get(
@@ -53,7 +48,7 @@ export default function App() {
           });
         })
       );
-  }, []);
+  };
 
   const handleSave = async (stocks: any) => {
     console.log("work", stocks);
@@ -74,37 +69,92 @@ export default function App() {
   return (
     <div className="App">
       <header className="App-header">
+        <h3>Stock price</h3>
+        <h6>stocks</h6>
+        <div className="search">
+          <p className="searchButton">Search for your trip: </p>
+          <input
+            value={searchParams.get("filter") || ""}
+            onChange={(event) => {
+              let filter = event.target.value;
+              if (filter) {
+                setSearchParams({ filter });
+              } else {
+                setSearchParams({});
+              }
+            }}
+          />
+        </div>
+        <br />
         <div>
-          <h3>Stock price</h3>
-          <h6>stocks</h6>
           <div className="stocks-container">
             <List sx={{ width: 550, bgcolor: "background.paper" }}>
-              {stocks.map((stock: any) => (
-                <div className="stock" key={stock.id}>
-                  <img
-                    src={`https://storage.googleapis.com/iex/api/logos/${
-                      stock.symbol as string
-                    }.png`}
-                    alt="logo"
-                    className="pic"
-                  />
-                  <div className="middle">
-                    <h4>{stock.symbol}</h4>
-                    <h5>{stock.companyName}</h5>
-                  </div>
-                  <div className="right">
+              {stocks
+                .filter((stock) => {
+                  let filter = searchParams.get("filter");
+                  if (!filter) return true;
+                  let name = stock.companyName;
+                  return name === filter;
+                })
+                .map((stock: any) => (
+                  <div className="stock" key={stock.id}>
+                    <img
+                      src={`https://storage.googleapis.com/iex/api/logos/${
+                        stock.symbol as string
+                      }.png`}
+                      alt="logo"
+                      className="pic"
+                    />
+                    <div className="middle">
+                      <h4>{stock.symbol}</h4>
+                      <h6 className="middleC">{stock.companyName}</h6>
+                    </div>
+                    <div className="right">
+                      <Grid
+                        container
+                        rowSpacing={1}
+                        columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+                      >
+                        <Grid item xs={12}>
+                          <h5>${stock.latestPrice}</h5>
+                        </Grid>
+                        <Grid item xs={4} container spacing={1}>
+                          <h6
+                            className={stock.changePercent > 0 ? "good" : "bad"}
+                          >
+                            {stock.change}
+                          </h6>
+                        </Grid>
+                        <Grid item xs={4}>
+                          <h6
+                            className={
+                              stock.changePercent > 0 ? "good1" : "bad1"
+                            }
+                          >
+                            {(stock.changePercent * 100).toFixed(2)}%
+                          </h6>
+                        </Grid>
+                      </Grid>
+                    </div>
+
+                    {/* <div className="right">
                     <h5>${stock.latestPrice}</h5>
-                    <h5 className={stock.changePercent > 0 ? "good" : "bad"}>
+                  <div className="right1">
+                    <h6 className={stock.changePercent > 0 ? "good" : "bad"}>
                       {stock.changePercent}
-                    </h5>
-                    <h5 className={stock.changePercent > 0 ? "good" : "bad"}>
+                    </h6>
+                    </div>
+                                      <div className="right2">
+
+                    <h6 className={stock.changePercent > 0 ? "good" : "bad"}>
                       {stock.change}
-                    </h5>
+                    </h6>
+                    </div> */}
+                    {/* </div> */}
+                    {/* style a divider here */}
+                    <hr className="single" />
                   </div>
-                  {/* style a divider here */}
-                  <hr className="single" />
-                </div>
-              ))}
+                ))}
             </List>
           </div>
           <button onClick={() => handleSave(stocks)}>Save</button>

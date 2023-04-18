@@ -2,16 +2,17 @@
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
 .stock {
-  white-space: nowrap;
+  /* white-space: nowrap;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  border: 1px solid black;
+  clear: both; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid black;
 }
 
 .stocks-container {
@@ -40,33 +41,64 @@ hr.single {
   color: #61dafb;
 }
 
+.good:before {
+  content: "↑";
+}
 .good {
   color: green;
 }
-
+.bad:before {
+  content: "↓";
+}
 .bad {
   color: red;
 }
 
-.bottomright {
-  position: absolute;
-  bottom: 0;
-  right: 0;
+.good1 {
+  color: green;
+}
+
+.bad1 {
+  color: red;
 }
 
 .pic {
-  float: left;
   border-radius: 50%;
-  max-width: 20%;
+  /* max-width: 20%;
+  height: auto; */
+  width: auto;
   height: auto;
+  margin: 40px;
 }
 
 .middle {
-  float: center;
-  min-width: 0;
+  /* float: center;
+  min-width: 0; */
+  width: 200px;
+  height: auto;
+  margin: 40px;
+}
+
+.middleC {
+  color: gray;
+  white-space: nowrap;
 }
 
 .right {
-  float: right;
-  min-width: 0;
+  width: 200px;
+  height: auto;
+  margin: 40px;
+}
+
+.child {
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.right1 {
+  padding: 5px;
+}
+
+.right2 {
+  padding: 5px;
 }
