@@ -37,9 +37,8 @@ List the ready features here:
 
 
 ## Screenshots
-![ss1](https://www.notion.so/Photo-dump-b51087734560429aafbfa49ada7b3bdf?pvs=4#30b68407ca074919a3544ef83dcbbd05)
-![ss2](https://file.notion.so/f/s/17f834cc-f111-4188-99b6-9ac495f61bbb/Pints_coding_task.jpg?id=30b68407-ca07-4919-a354-4ef83dcbbd05&table=block&spaceId=8c985e98-5fd2-4800-84a8-7038d7b9dc12&expirationTimestamp=1681884184660&signature=v3J-v-WgiizAMngziVJtjXSOngKiITWT9LYBcDzv0uE&downloadName=Pints+coding+task.jpg)
-![ss3](https://file.notion.so/f/s/384be5af-6133-4466-82ca-e43c807c44ec/Save_button.jpg?id=8887692c-4001-44d0-b9ee-4fbc4daded64&table=block&spaceId=8c985e98-5fd2-4800-84a8-7038d7b9dc12&expirationTimestamp=1681884207665&signature=hOAGDpW8-r2dsrpk02BwCbI6KUBCTyVURXYeCchRz3w&downloadName=Save+button.jpg)
+![ss1](https://file.notion.so/f/s/17f834cc-f111-4188-99b6-9ac495f61bbb/Pints_coding_task.jpg?id=30b68407-ca07-4919-a354-4ef83dcbbd05&table=block&spaceId=8c985e98-5fd2-4800-84a8-7038d7b9dc12&expirationTimestamp=1681884184660&signature=v3J-v-WgiizAMngziVJtjXSOngKiITWT9LYBcDzv0uE&downloadName=Pints+coding+task.jpg)
+![ss2](https://file.notion.so/f/s/384be5af-6133-4466-82ca-e43c807c44ec/Save_button.jpg?id=8887692c-4001-44d0-b9ee-4fbc4daded64&table=block&spaceId=8c985e98-5fd2-4800-84a8-7038d7b9dc12&expirationTimestamp=1681884207665&signature=hOAGDpW8-r2dsrpk02BwCbI6KUBCTyVURXYeCchRz3w&downloadName=Save+button.jpg)
 <!-- If you have screenshots you'd like to share, include them here. -->
 
 
