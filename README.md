@@ -30,7 +30,6 @@ The Resume is ready for use after the user has entered the details and selected 
 - Material UI
 
 ## Features
-List the ready features here:
 - Real time data 
 - Save data to backend
 - Indicators to indicate positive and negative changes for the stock
